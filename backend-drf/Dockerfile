@@ -1,4 +1,3 @@
-# Purpose: A Dockerfile is a step-by-step instruction file that tells Docker how to build and run our application.
 FROM python:3.10-slim
 
 ENV PYTHONUNBUFFERED=1
@@ -18,6 +17,5 @@ COPY . .
 
 EXPOSE 8000
 
-# gunicorn = production/application server, clickmart_main.wsgi:application = Django entry point, --bind 0.0.0.0:8000 = external traffic. Reminaing: tuning options
-# A worker is just one instance of your Django app running inside Gunicorn.
-CMD ["sh", "-c", "gunicorn clickmart_main.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --timeout 180"]
+# Run migrations BEFORE starting server (critical fix)
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn clickmart_main.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --timeout 180"]
