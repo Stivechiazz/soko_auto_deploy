@@ -28,7 +28,10 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [".onrender.com",]
+ALLOWED_HOSTS = [
+    "soko-auto-deploy.onrender.com",
+    ".onrender.com"
+]
 
 # Application definition
 
@@ -91,20 +94,20 @@ WSGI_APPLICATION = 'clickmart_main.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT')
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': config('DB_PORT')
+#     }
+
 
 DATABASES = {
     "default": dj_database_url.parse(
-        config("postgresql://soko_user:OAW244gwHNPvphM9VAZJdOWInS3lZhEr@dpg-d81jj750lvsc7392in20-a.oregon-postgres.render.com/soko_rjd6")
+        config("DATABASE_URL")
     )
 }
 
