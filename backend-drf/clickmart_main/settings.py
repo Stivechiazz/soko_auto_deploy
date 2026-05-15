@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".onrender.com",]
 
 # Application definition
 
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -100,6 +102,11 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    "default": dj_database_url.parse(
+        config("postgresql://soko_user:OAW244gwHNPvphM9VAZJdOWInS3lZhEr@dpg-d81jj750lvsc7392in20-a.oregon-postgres.render.com/soko_rjd6")
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
